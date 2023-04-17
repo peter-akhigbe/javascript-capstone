@@ -9,6 +9,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
+      filename: 'index.html',
     }),
   ],
   output: {
@@ -17,6 +18,7 @@ module.exports = {
   },
   devServer: {
     static: './dist',
+    watchFiles: ['src/**/*.html', 'src/**/*.css', 'src/**/*.js'],
   },
   optimization: {
     runtimeChunk: 'single',
