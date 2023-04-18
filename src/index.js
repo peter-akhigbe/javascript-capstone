@@ -9,6 +9,49 @@ const showsCount = document.querySelector('.shows-count');
 
 let shows = [];
 
+const getComment = async (id) => {
+  const response = await fetch(`${commentUrl}?item_id=${id}`);
+  const data = await response.json();
+  return data;
+};
+
+const postComment = (id, list) => {
+  const nameInput = document.querySelector('.name-input');
+  const commentInput = document.querySelector('.comment-input');
+  const submitCommentBtn = document.querySelector('.submit-comment-btn');
+
+  submitCommentBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    const username = nameInput.value;
+    const comment = commentInput.value;
+
+    if (username && comment) {
+      const data = { item_id: id, username, comment };
+
+      fetch(commentUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      }).then(() => {
+        nameInput.value = '';
+        commentInput.value = '';
+
+        getComment(id).then((arr) => {
+          list.innerHTML = '';
+          arr.forEach((item) => {
+            const comment = document.createElement('li');
+            comment.textContent = `${item.creation_date} ${item.username}: ${item.comment}`;
+            list.appendChild(comment);
+          });
+        });
+      });
+    }
+  });
+};
+
 const commentFunc = (array) => {
   const commentBtns = document.querySelectorAll('.comments-btn');
   const commentPopup = document.querySelector('.comment-popup');
@@ -21,19 +64,16 @@ const commentFunc = (array) => {
       const movieTitle = document.querySelector('.movie-title');
       const popupPhoto = document.querySelector('.popup-photo');
 
+      // index = array[index].id - 1;
+      console.log(index);
+
       commentPopup.style.display = 'flex';
       document.body.style.overflow = 'hidden';
       popupPhoto.src = array[index].image.original;
       movieTitle.textContent = array[index].name;
       movieSummary.innerHTML = array[index].summary;
 
-      const getComment = async () => {
-        const response = await fetch(`${commentUrl}?item_id=${index}`);
-        const data = await response.json();
-        return data;
-      };
-
-      getComment().then((arr) => {
+      getComment(index).then((arr) => {
         commentsList.innerHTML = '';
         arr.forEach((item) => {
           const comment = document.createElement('li');
@@ -42,44 +82,7 @@ const commentFunc = (array) => {
         });
       });
 
-      const commenter = () => {
-        const nameInput = document.querySelector('.name-input');
-        const commentInput = document.querySelector('.comment-input');
-        const submitCommentBtn = document.querySelector('.submit-comment-btn');
-
-        submitCommentBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-
-          const username = nameInput.value;
-          const comment = commentInput.value;
-
-          if (username && comment) {
-            const data = { item_id: index, username, comment };
-
-            fetch(commentUrl, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(data),
-            }).then(() => {
-              nameInput.value = '';
-              commentInput.value = '';
-
-              getComment().then((arr) => {
-                commentsList.innerHTML = '';
-                arr.forEach((item) => {
-                  const comment = document.createElement('li');
-                  comment.textContent = `${item.creation_date} ${item.username}: ${item.comment}`;
-                  commentsList.appendChild(comment);
-                });
-              });
-            });
-          }
-        });
-      };
-
-      commenter();
+      postComment(index, commentsList);
     });
   });
 
@@ -112,6 +115,8 @@ const loadData = async () => {
       `;
   });
   showsCount.innerHTML = `TV Shows (${shows.length})`;
+
+  // console.log(shows);
 
   commentFunc(shows);
 };
