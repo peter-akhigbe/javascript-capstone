@@ -6,6 +6,7 @@ const commentUrl = `${baseUrl}apps/${involvementAppID}/comments`;
 
 const showsList = document.querySelector('.shows');
 const showsCount = document.querySelector('.shows-count');
+const commentsList = document.querySelector('.comments-list');
 
 let shows = [];
 
@@ -19,11 +20,23 @@ const getComment = async (id) => {
   }
 };
 
+const counter = () => {
+  const comments = document.querySelector('.comments');
+  const { length } = commentsList.children;
+  console.log(commentsList);
+  comments.textContent = `Comments (${length})`;
+};
+
+const createList = (item) => {
+  const comment = document.createElement('li');
+  comment.textContent = `${item.creation_date} ${item.username}: ${item.comment}`;
+  commentsList.appendChild(comment);
+};
+
 const postComment = () => {
   const nameInput = document.querySelector('.name-input');
   const commentInput = document.querySelector('.comment-input');
   const submitCommentBtn = document.querySelector('.submit-comment-btn');
-  const commentsList = document.querySelector('.comments-list');
 
   const submitCommentHandler = async (e) => {
     e.preventDefault();
@@ -49,9 +62,8 @@ const postComment = () => {
           commentsList.innerHTML = '';
           if (arr.length > 0) {
             arr.forEach((item) => {
-              const comment = document.createElement('li');
-              comment.textContent = `${item.creation_date} ${item.username}: ${item.comment}`;
-              commentsList.appendChild(comment);
+              createList(item);
+              counter();
             });
           }
         });
@@ -69,7 +81,6 @@ const commentFunc = (array) => {
 
   commentBtns.forEach((btn, index) => {
     btn.addEventListener('click', () => {
-      const commentsList = document.querySelector('.comments-list');
       const movieSummary = document.querySelector('.movie-summary');
       const movieTitle = document.querySelector('.movie-title');
       const popupPhoto = document.querySelector('.popup-photo');
@@ -87,14 +98,11 @@ const commentFunc = (array) => {
         commentsList.innerHTML = '';
         if (arr.length > 0) {
           arr.forEach((item) => {
-            const comment = document.createElement('li');
-            comment.textContent = `${item.creation_date} ${item.username}: ${item.comment}`;
-            commentsList.appendChild(comment);
+            createList(item);
+            counter();
           });
         }
       });
-
-      // console.log(commentsList.childElementCount);
     });
   });
 
@@ -122,7 +130,7 @@ const loadData = async () => {
               <small class="likes-text">99 Likes</small>
             </div>
           </div>
-          <button id="${item.id}" class="comments-btn">Comments</button>
+          <button class="comments-btn">Comments</button>
         </li>
       `;
   });
