@@ -156,3 +156,58 @@
     grid-template-columns: repeat(4, 1fr);
   }
 }
+
+/* comment popup styles */
+
+.comment-popup {
+  position: fixed;
+  top: 10%;
+  left: 10%;
+  right: 10%;
+  bottom: 10%;
+  background-color: white;
+  border: 5px solid black;
+  display: none;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 100;
+  overflow: auto;
+  padding: 20px 20%;
+}
+
+.close-popup-btn {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  font-weight: 700;
+  font-size: xx-large;
+  cursor: pointer;
+}
+
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.popup-photo {
+  width: auto;
+  height: 70%;
+}
+
+.submit-comment-btn {
+  padding: 0.5rem;
+  border: 3px solid black;
+  background-color: white;
+  font-weight: 700;
+  color: black;
+  width: 100px;
+  cursor: pointer;
+}
+
+input,
+textarea {
+  padding: 0.5rem;
+  border: 3px solid black;
+}
