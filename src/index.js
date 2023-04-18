@@ -19,16 +19,15 @@ const getComment = async (id) => {
   }
 };
 
-const postComment = (id, list) => {
+const postComment = () => {
   const nameInput = document.querySelector('.name-input');
   const commentInput = document.querySelector('.comment-input');
   const submitCommentBtn = document.querySelector('.submit-comment-btn');
-
-  submitCommentBtn.setAttribute('id', id);
+  const commentsList = document.querySelector('.comments-list');
 
   const submitCommentHandler = async (e) => {
     e.preventDefault();
-    id = Number(e.target.id);
+    const id = Number(e.target.id);
 
     const username = nameInput.value;
     const comment = commentInput.value;
@@ -47,12 +46,14 @@ const postComment = (id, list) => {
         commentInput.value = '';
 
         getComment(id).then((arr) => {
-          list.innerHTML = '';
-          arr.forEach((item) => {
-            const comment = document.createElement('li');
-            comment.textContent = `${item.creation_date} ${item.username}: ${item.comment}`;
-            list.appendChild(comment);
-          });
+          commentsList.innerHTML = '';
+          if (arr.length > 0) {
+            arr.forEach((item) => {
+              const comment = document.createElement('li');
+              comment.textContent = `${item.creation_date} ${item.username}: ${item.comment}`;
+              commentsList.appendChild(comment);
+            });
+          }
         });
       });
     }
@@ -72,6 +73,9 @@ const commentFunc = (array) => {
       const movieSummary = document.querySelector('.movie-summary');
       const movieTitle = document.querySelector('.movie-title');
       const popupPhoto = document.querySelector('.popup-photo');
+      const submitCommentBtn = document.querySelector('.submit-comment-btn');
+
+      submitCommentBtn.setAttribute('id', index);
 
       commentPopup.style.display = 'flex';
       document.body.style.overflow = 'hidden';
@@ -81,14 +85,16 @@ const commentFunc = (array) => {
 
       getComment(index).then((arr) => {
         commentsList.innerHTML = '';
-        arr.forEach((item) => {
-          const comment = document.createElement('li');
-          comment.textContent = `${item.creation_date} ${item.username}: ${item.comment}`;
-          commentsList.appendChild(comment);
-        });
+        if (arr.length > 0) {
+          arr.forEach((item) => {
+            const comment = document.createElement('li');
+            comment.textContent = `${item.creation_date} ${item.username}: ${item.comment}`;
+            commentsList.appendChild(comment);
+          });
+        }
       });
 
-      postComment(index, commentsList);
+      // console.log(commentsList.childElementCount);
     });
   });
 
@@ -126,3 +132,4 @@ const loadData = async () => {
 };
 
 loadData();
+postComment();
