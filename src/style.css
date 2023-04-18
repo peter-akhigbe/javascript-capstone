@@ -134,6 +134,11 @@
   .show {
     width: 100%;
   }
+
+  .comments-btn:hover {
+    cursor: pointer;
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.2);
+  }
 }
 
 @media screen and (min-width: 840px) {
