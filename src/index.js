@@ -20,7 +20,7 @@ const getComment = async (id) => {
   }
 };
 
-const counter = () => {
+const commentCounter = () => {
   const comments = document.querySelector('.comments');
   const { length } = commentsList.children;
   console.log(commentsList);
@@ -63,7 +63,7 @@ const postComment = () => {
           if (arr.length > 0) {
             arr.forEach((item) => {
               createList(item);
-              counter();
+              commentCounter();
             });
           }
         });
@@ -99,7 +99,7 @@ const commentFunc = (array) => {
         if (arr.length > 0) {
           arr.forEach((item) => {
             createList(item);
-            counter();
+            commentCounter();
           });
         }
       });
