@@ -10,9 +10,13 @@ const showsCount = document.querySelector('.shows-count');
 let shows = [];
 
 const getComment = async (id) => {
-  const response = await fetch(`${commentUrl}?item_id=${id}`);
-  const data = await response.json();
-  return data;
+  try {
+    const response = await fetch(`${commentUrl}?item_id=${id}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw new Error(error);
+  }
 };
 
 const postComment = (id, list) => {
@@ -20,8 +24,11 @@ const postComment = (id, list) => {
   const commentInput = document.querySelector('.comment-input');
   const submitCommentBtn = document.querySelector('.submit-comment-btn');
 
-  submitCommentBtn.addEventListener('click', (e) => {
+  submitCommentBtn.setAttribute('id', id);
+
+  const submitCommentHandler = async (e) => {
     e.preventDefault();
+    id = Number(e.target.id);
 
     const username = nameInput.value;
     const comment = commentInput.value;
@@ -49,7 +56,9 @@ const postComment = (id, list) => {
         });
       });
     }
-  });
+  };
+
+  submitCommentBtn.addEventListener('click', submitCommentHandler);
 };
 
 const commentFunc = (array) => {
@@ -63,9 +72,6 @@ const commentFunc = (array) => {
       const movieSummary = document.querySelector('.movie-summary');
       const movieTitle = document.querySelector('.movie-title');
       const popupPhoto = document.querySelector('.popup-photo');
-
-      // index = array[index].id - 1;
-      console.log(index);
 
       commentPopup.style.display = 'flex';
       document.body.style.overflow = 'hidden';
@@ -110,13 +116,11 @@ const loadData = async () => {
               <small class="likes-text">99 Likes</small>
             </div>
           </div>
-          <button class="comments-btn">Comments</button>
+          <button id="${item.id}" class="comments-btn">Comments</button>
         </li>
       `;
   });
   showsCount.innerHTML = `TV Shows (${shows.length})`;
-
-  // console.log(shows);
 
   commentFunc(shows);
 };
