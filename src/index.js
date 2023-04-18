@@ -7,6 +7,7 @@ const commentUrl = `${baseUrl}apps/${involvementAppID}/comments`;
 const showsList = document.querySelector('.shows');
 const showsCount = document.querySelector('.shows-count');
 const commentsList = document.querySelector('.comments-list');
+const comments = document.querySelector('.comments');
 
 let shows = [];
 
@@ -21,9 +22,7 @@ const getComment = async (id) => {
 };
 
 const commentCounter = () => {
-  const comments = document.querySelector('.comments');
-  const { length } = commentsList.children;
-  console.log(commentsList);
+  const length = commentsList.childElementCount;
   comments.textContent = `Comments (${length})`;
 };
 
@@ -109,6 +108,7 @@ const commentFunc = (array) => {
   closeBtn.addEventListener('click', () => {
     commentPopup.style.display = 'none';
     document.body.style.overflow = 'auto';
+    comments.textContent = 'Comments';
   });
 };
 
