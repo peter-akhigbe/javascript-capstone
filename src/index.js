@@ -1,5 +1,5 @@
-import './style.css'
-import { loadShows } from './modules/shows.js';
+import './style.css';
+import loadShows from './modules/shows.js';
 
 const showsList = document.querySelector('.shows');
 const showsCount = document.querySelector('.shows-count');
