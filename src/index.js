@@ -1,5 +1,8 @@
 import './style.css';
 import loadShows from './modules/shows.js';
+import { involvementAppID, baseUrl } from './config/api.js';
+
+const commentUrl = `${baseUrl}apps/${involvementAppID}/comments`;
 
 const showsList = document.querySelector('.shows');
 const showsCount = document.querySelector('.shows-count');
@@ -10,22 +13,79 @@ const commentFunc = (array) => {
   const commentBtns = document.querySelectorAll('.comments-btn');
   const commentPopup = document.querySelector('.comment-popup');
   const closeBtn = document.querySelector('.close-popup-btn');
-  const popupPhoto = document.querySelector('.popup-photo');
-  const movieTitle = document.querySelector('.movie-title');
-  const movieSummary = document.querySelector('.movie-summary');
-  // const submitCommentBtn = document.querySelector('.submit-comment-btn');
 
   commentBtns.forEach((btn, index) => {
     btn.addEventListener('click', () => {
+      const commentsList = document.querySelector('.comments-list');
+      const movieSummary = document.querySelector('.movie-summary');
+      const movieTitle = document.querySelector('.movie-title');
+      const popupPhoto = document.querySelector('.popup-photo');
+
       commentPopup.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
       popupPhoto.src = array[index].image.original;
       movieTitle.textContent = array[index].name;
       movieSummary.innerHTML = array[index].summary;
+
+      const getComment = async () => {
+        const response = await fetch(`${commentUrl}?item_id=${index}`);
+        const data = await response.json();
+        return data;
+      };
+
+      getComment().then((arr) => {
+        commentsList.innerHTML = '';
+        arr.forEach((item) => {
+          const comment = document.createElement('li');
+          comment.textContent = `${item.creation_date} ${item.username}: ${item.comment}`;
+          commentsList.appendChild(comment);
+        });
+      });
+
+      const commenter = () => {
+        const nameInput = document.querySelector('.name-input');
+        const commentInput = document.querySelector('.comment-input');
+        const submitCommentBtn = document.querySelector('.submit-comment-btn');
+
+        submitCommentBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+
+          const username = nameInput.value;
+          const comment = commentInput.value;
+
+          if (username && comment) {
+            const data = { item_id: index, username, comment };
+
+            fetch(commentUrl, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data),
+            }).then(() => {
+              nameInput.value = '';
+              commentInput.value = '';
+
+              getComment().then((arr) => {
+                commentsList.innerHTML = '';
+                arr.forEach((item) => {
+                  const comment = document.createElement('li');
+                  comment.textContent = `${item.creation_date} ${item.username}: ${item.comment}`;
+                  commentsList.appendChild(comment);
+                });
+              });
+            });
+          }
+        });
+      };
+
+      commenter();
     });
   });
 
   closeBtn.addEventListener('click', () => {
     commentPopup.style.display = 'none';
+    document.body.style.overflow = 'auto';
   });
 };
 
@@ -33,7 +93,6 @@ const loadData = async () => {
   const data = await loadShows();
   shows = data;
   showsList.innerHTML = '';
-  // console.log(shows);
 
   shows.forEach((item) => {
     showsList.innerHTML += `
