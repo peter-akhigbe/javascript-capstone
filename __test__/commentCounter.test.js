@@ -5,10 +5,11 @@ test('test comment counter', () => {
     <h3 class="comments">Comments</h3>
 
     <ul class="comments-list">
-          <li>Usesles movie</li>
-          <li>waste of time</li>
-          <li>rubbish</li>
-    </ul>`;
+      <li>Usesles movie</li>
+      <li>waste of time</li>
+      <li>rubbish</li>
+    </ul>
+  `;
 
   const comments = document.querySelector('.comments');
 
