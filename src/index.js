@@ -10,6 +10,7 @@ const commentsList = document.querySelector('.comments-list');
 const comments = document.querySelector('.comments');
 
 let shows = [];
+let likes = [];
 
 const getComment = async (id) => {
   try {
