@@ -10,9 +10,9 @@ const commentsList = document.querySelector('.comments-list');
 const comments = document.querySelector('.comments');
 
 let shows = [];
-let likes = [];
+const likes = [];
 
-const getComment = async (id) => {
+export const getComment = async (id) => {
   try {
     const response = await fetch(`${commentUrl}?item_id=${id}`);
     const data = await response.json();
@@ -113,7 +113,7 @@ const commentFunc = (array) => {
   });
 };
 
-const loadData = async () => {
+export const loadData = async () => {
   const data = await loadShows();
   shows = data;
   showsList.innerHTML = '';
