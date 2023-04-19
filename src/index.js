@@ -2,12 +2,11 @@ import './style.css';
 import loadShows from './modules/shows.js';
 import { involvementAppID, baseUrl } from './config/api.js';
 import { addLike, getLikes } from './modules/likes.js';
-// import loadData from './modules/loadData.js';
+import { displayItemsCounter } from './modules/itemsCounter.js';
 
 const commentUrl = `${baseUrl}apps/${involvementAppID}/comments`;
 
 const showsList = document.querySelector('.shows');
-const showsCount = document.querySelector('.shows-count');
 const commentsList = document.querySelector('.comments-list');
 const comments = document.querySelector('.comments');
 
@@ -156,10 +155,9 @@ const loadData = async () => {
     });
   });
 
-  showsCount.innerHTML = `TV Shows (${shows.length})`;
-
   commentFunc(shows);
 };
 
 loadData();
 postComment();
+displayItemsCounter();
