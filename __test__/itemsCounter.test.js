@@ -1,14 +1,20 @@
-import countItems from '../src/modules/itemsCounter.js';
+import { countItems, displayItemsCounter } from '../src/modules/itemsCounter.js';
 
 jest.mock('../src/modules/itemsCounter.js');
 
 describe('Test All Items Count', () => {
   it('returns the correct number of items on the page', async () => {
-    // Arrange
-    const data = await countItems();
-    // Act
-    const len = data.length;
-    // Assert
-    expect(len).toBe(6);
+    document.body.innerHTML = `
+      <p class=show></p>
+    `;
+
+    const show = document.querySelector('.show');
+
+    const data = countItems();
+
+    displayItemsCounter(show, '.show');
+
+    expect(data).toBe(6);
+    expect(show.innerHTML).toBe('TV Shows (6)');
   });
 });
