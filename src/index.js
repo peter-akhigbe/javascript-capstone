@@ -1,18 +1,18 @@
 import './style.css';
-// import loadShows from './modules/shows.js';
+import loadShows from './modules/shows.js';
 import { involvementAppID, baseUrl } from './config/api.js';
-// import { addLike, getLikes } from './modules/likes.js';
-import loadData from './modules/loadData.js';
+import { addLike, getLikes } from './modules/likes.js';
+// import loadData from './modules/loadData.js';
 
 const commentUrl = `${baseUrl}apps/${involvementAppID}/comments`;
 
-// const showsList = document.querySelector('.shows');
-// const showsCount = document.querySelector('.shows-count');
+const showsList = document.querySelector('.shows');
+const showsCount = document.querySelector('.shows-count');
 const commentsList = document.querySelector('.comments-list');
 const comments = document.querySelector('.comments');
 
-// let shows = [];
-// let likes = [];
+let shows = [];
+let likes = [];
 
 const getComment = async (id) => {
   try {
@@ -76,92 +76,90 @@ const postComment = () => {
   submitCommentBtn.addEventListener('click', submitCommentHandler);
 };
 
-// const commentFunc = (array) => {
-//   const commentBtns = document.querySelectorAll('.comments-btn');
-//   const commentPopup = document.querySelector('.comment-popup');
-//   const closeBtn = document.querySelector('.close-popup-btn');
+const commentFunc = (array) => {
+  const commentBtns = document.querySelectorAll('.comments-btn');
+  const commentPopup = document.querySelector('.comment-popup');
+  const closeBtn = document.querySelector('.close-popup-btn');
 
-//   commentBtns.forEach((btn, index) => {
-//     btn.addEventListener('click', () => {
-//       const movieSummary = document.querySelector('.movie-summary');
-//       const movieTitle = document.querySelector('.movie-title');
-//       const popupPhoto = document.querySelector('.popup-photo');
-//       const submitCommentBtn = document.querySelector('.submit-comment-btn');
+  commentBtns.forEach((btn, index) => {
+    btn.addEventListener('click', () => {
+      const movieSummary = document.querySelector('.movie-summary');
+      const movieTitle = document.querySelector('.movie-title');
+      const popupPhoto = document.querySelector('.popup-photo');
+      const submitCommentBtn = document.querySelector('.submit-comment-btn');
 
-//       submitCommentBtn.setAttribute('id', index);
+      submitCommentBtn.setAttribute('id', index);
 
-//       commentPopup.style.display = 'flex';
-//       document.body.style.overflow = 'hidden';
-//       popupPhoto.src = array[index].image.original;
-//       movieTitle.textContent = array[index].name;
-//       movieSummary.innerHTML = array[index].summary;
+      commentPopup.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      popupPhoto.src = array[index].image.original;
+      movieTitle.textContent = array[index].name;
+      movieSummary.innerHTML = array[index].summary;
 
-//       getComment(index).then((arr) => {
-//         commentsList.innerHTML = '';
-//         if (arr.length > 0) {
-//           arr.forEach((item) => {
-//             createList(item);
-//             commentCounter();
-//           });
-//         }
-//       });
-//     });
-//   });
+      getComment(index).then((arr) => {
+        commentsList.innerHTML = '';
+        if (arr.length > 0) {
+          arr.forEach((item) => {
+            createList(item);
+            commentCounter();
+          });
+        }
+      });
+    });
+  });
 
-//   closeBtn.addEventListener('click', () => {
-//     commentPopup.style.display = 'none';
-//     document.body.style.overflow = 'auto';
-//     comments.textContent = 'Comments';
-//   });
-// };
+  closeBtn.addEventListener('click', () => {
+    commentPopup.style.display = 'none';
+    document.body.style.overflow = 'auto';
+    comments.textContent = 'Comments';
+  });
+};
 
-// const loadData = async () => {
-//   const data = await loadShows();
-//   const getlikes = await getLikes();
-//   shows = data;
-//   likes = getlikes;
+const loadData = async () => {
+  const data = await loadShows();
+  const getlikes = await getLikes();
+  shows = data;
+  likes = getlikes;
 
-//   showsList.innerHTML = '';
+  showsList.innerHTML = '';
 
-//   shows.forEach((item) => {
-//     let movieLikes = 0;
-//     if (likes.find((like) => like.item_id === item.id)) {
-//       movieLikes = likes.find((like) => like.item_id === item.id).likes;
-//     }
-//     showsList.innerHTML += `
-//         <li class="show">
-//           <div class="show-img-box">
-//             <img src="${item.image.original}" class="show-img" />
-//           </div>
-//           <div class="show-details">
-//             <div class="show-title">${item.name}</div>
-//             <div class="show-likes">
-//               <div class="likes-icon">
-//                 <i class="fa-regular fa-heart" show-id="${item.id}"></i>
-//               </div>
-//               <small class="likes-text">
-//                 ${movieLikes} ${movieLikes === 1 ? 'like' : 'likes'}
-//               </small>
-//             </div>
-//           </div>
-//           <button class="comments-btn">Comments</button>
-//         </li>
-//       `;
+  shows.forEach((item) => {
+    let movieLikes = 0;
+    if (likes.find((like) => like.item_id === item.id)) {
+      movieLikes = likes.find((like) => like.item_id === item.id).likes;
+    }
+    showsList.innerHTML += `
+        <li class="show">
+          <div class="show-img-box">
+            <img src="${item.image.original}" class="show-img" />
+          </div>
+          <div class="show-details">
+            <div class="show-title">${item.name}</div>
+            <div class="show-likes">
+              <div class="likes-icon">
+                <i class="fa-regular fa-heart" show-id="${item.id}"></i>
+              </div>
+              <small class="likes-text" likes-text-id="${item.id}">
+                ${movieLikes} ${movieLikes === 1 ? 'like' : 'likes'}
+              </small>
+            </div>
+          </div>
+          <button class="comments-btn">Comments</button>
+        </li>
+      `;
 
-//     const hearts = document.querySelectorAll('.likes-icon i');
-//     hearts.forEach((heart) => {
-//       heart.addEventListener('click', () => {
-//         addLike(Number(heart.getAttribute('show-id')));
-//         loadData();
-//         console.log(`clicked ${heart.getAttribute('show-id')}`);
-//       });
-//     });
-//   });
+    const hearts = document.querySelectorAll('.likes-icon i');
+    hearts.forEach((heart) => {
+      heart.addEventListener('click', () => {
+        addLike(Number(heart.getAttribute('show-id')));
+      });
+    });
+  });
 
-//   showsCount.innerHTML = `TV Shows (${shows.length})`;
+  showsCount.innerHTML = `TV Shows (${shows.length})`;
 
-//   commentFunc(shows);
-// };
+  commentFunc(shows);
+};
 
 loadData();
 postComment();
