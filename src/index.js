@@ -139,7 +139,7 @@ const loadData = async () => {
               </small>
             </div>
           </div>
-          <button class="comments-btn">Comments</button>
+          <button id="comments-btn-${item.id}" class="comments-btn">Comments</button>
         </li>
       `;
 
