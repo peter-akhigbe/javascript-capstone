@@ -1,15 +1,17 @@
 import './style.css';
 import loadShows from './modules/shows.js';
 import { involvementAppID, baseUrl } from './config/api.js';
+import { addLike, getLikes } from './modules/likes.js';
+import { displayItemsCounter } from './modules/itemsCounter.js';
 
 const commentUrl = `${baseUrl}apps/${involvementAppID}/comments`;
 
 const showsList = document.querySelector('.shows');
-const showsCount = document.querySelector('.shows-count');
 const commentsList = document.querySelector('.comments-list');
 const comments = document.querySelector('.comments');
 
 let shows = [];
+let likes = [];
 
 const getComment = async (id) => {
   try {
@@ -114,10 +116,17 @@ const commentFunc = (array) => {
 
 const loadData = async () => {
   const data = await loadShows();
+  const getlikes = await getLikes();
   shows = data;
+  likes = getlikes;
+
   showsList.innerHTML = '';
 
   shows.forEach((item) => {
+    let movieLikes = 0;
+    if (likes.find((like) => like.item_id === item.id)) {
+      movieLikes = likes.find((like) => like.item_id === item.id).likes;
+    }
     showsList.innerHTML += `
         <li class="show">
           <div class="show-img-box">
@@ -126,18 +135,29 @@ const loadData = async () => {
           <div class="show-details">
             <div class="show-title">${item.name}</div>
             <div class="show-likes">
-              <div class="likes-icon"><i class="fa-regular fa-heart"></i></div>
-              <small class="likes-text">99 Likes</small>
+              <div class="likes-icon">
+                <i class="fa-regular fa-heart" show-id="${item.id}"></i>
+              </div>
+              <small class="likes-text" likes-text-id="${item.id}">
+                ${movieLikes} ${movieLikes === 1 ? 'like' : 'likes'}
+              </small>
             </div>
           </div>
           <button class="comments-btn">Comments</button>
         </li>
       `;
+
+    const hearts = document.querySelectorAll('.likes-icon i');
+    hearts.forEach((heart) => {
+      heart.addEventListener('click', () => {
+        addLike(Number(heart.getAttribute('show-id')));
+      });
+    });
   });
-  showsCount.innerHTML = `TV Shows (${shows.length})`;
 
   commentFunc(shows);
 };
 
 loadData();
 postComment();
+displayItemsCounter();
