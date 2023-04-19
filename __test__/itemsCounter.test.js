@@ -1,6 +1,6 @@
-import countItems from '../modules/itemsCounter.js';
+import countItems from '../src/modules/itemsCounter.js';
 
-jest.mock('../modules/itemsCounter.js');
+jest.mock('../src/modules/itemsCounter.js');
 
 describe('Test All Items Count', () => {
   it('returns the correct number of items on the page', async () => {
