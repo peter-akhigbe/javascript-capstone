@@ -3,12 +3,12 @@ import loadShows from './modules/shows.js';
 import { involvementAppID, baseUrl } from './config/api.js';
 import { addLike, getLikes } from './modules/likes.js';
 import { displayItemsCounter } from './modules/itemsCounter.js';
+import commentCounter from './modules/commentCounter.js';
 
 const commentUrl = `${baseUrl}apps/${involvementAppID}/comments`;
 
 const showsList = document.querySelector('.shows');
 const commentsList = document.querySelector('.comments-list');
-const comments = document.querySelector('.comments');
 
 let shows = [];
 let likes = [];
@@ -21,11 +21,6 @@ const getComment = async (id) => {
   } catch (error) {
     throw new Error(error);
   }
-};
-
-const commentCounter = () => {
-  const length = commentsList.childElementCount;
-  comments.textContent = `Comments (${length})`;
 };
 
 const createList = (item) => {
@@ -79,6 +74,7 @@ const commentFunc = (array) => {
   const commentBtns = document.querySelectorAll('.comments-btn');
   const commentPopup = document.querySelector('.comment-popup');
   const closeBtn = document.querySelector('.close-popup-btn');
+  const comments = document.querySelector('.comments');
 
   commentBtns.forEach((btn, index) => {
     btn.addEventListener('click', () => {
@@ -143,7 +139,7 @@ const loadData = async () => {
               </small>
             </div>
           </div>
-          <button class="comments-btn">Comments</button>
+          <button id="comments-btn-${item.id}" class="comments-btn">Comments</button>
         </li>
       `;
 
