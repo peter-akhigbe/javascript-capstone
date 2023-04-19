@@ -1,4 +1,4 @@
-import { loadData } from '../index.js';
+// import { loadData } from '../index.js';
 import { baseUrl, involvementAppID } from '../config/api.js';
 
 export const addLike = async (id) => {
@@ -12,7 +12,7 @@ export const addLike = async (id) => {
     }),
   });
   Promise.resolve(response);
-  loadData();
+  // loadData();
 };
 
 export const getLikes = async () => {
