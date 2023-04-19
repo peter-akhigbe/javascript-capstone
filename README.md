@@ -13,20 +13,18 @@
   - [🛠 Built With](#built-with)
     - [Tech Stack](#tech-stack)
     - [Key Features](#key-features)
-  - [🚀 Video Presentation](#video-resentation)
+  - [🚀 Video Presentation](#video-presentation)
 - [💻 Getting Started](#getting-started)
   - [Setup](#setup)
   - [Prerequisites](#prerequisites)
   - [Install](#install)
   - [Usage](#usage)
   - [Run tests](#run-tests)
-  - [Deployment](#triangular_flag_on_post-deployment)
 - [👥 Authors](#authors)
 - [🔭 Future Features](#future-features)
 - [🤝 Contributing](#contributing)
 - [⭐️ Show your support](#support)
 - [🙏 Acknowledgements](#acknowledgements)
-- [❓ FAQ (OPTIONAL)](#faq)
 - [📝 License](#license)
 
 <!-- PROJECT DESCRIPTION -->
@@ -51,17 +49,17 @@ SpyTime is a simple movie gallery website, it uses the TV Maze open api to get d
 
 ### Key Features <a name="key-features"></a>
 
-- **Minimalistic Design**
-- **API**
-- **WebPack**
+- **API call to display a list of TV Shows**
+- **Ability to 'like' a movie**
+- **Ability to add comments to movies**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- LIVE DEMO -->
 
-## 🚀 Video Presentation <a name="live-demo"></a>
+## 🚀 Video Presentation <a name="video-presentation"></a>
 
-- [Video Presentation](https://peter-akhigbe.github.io/javascript-capstone/)
+- [Video Presentation](https://drive.google.com/file/d/1COFwL_WgN_RxzD03hPZVUuaOfiKsR5w3/view?usp=sharing)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -77,23 +75,22 @@ In order to run this project you need: Node.js
 
 ### Setup
 
-Clone this repository to your desired folder: git clone https://github.com/peter-akhigbe/javascript-capstone/
+Clone this repository to your desired folder: 
+```
+git clone https://github.com/peter-akhigbe/javascript-capstone.git
+```
 
 ### Install
 
-Install this project with: npm install
+Install this project with: `npm install`
 
 ### Usage
 
-To run the project, execute the following command: npm start
+To run the project, execute the following command: `npm start`
 
 ### Run tests
 
-To run tests, run the following command: N/A
-
-### Deployment
-
-You can deploy this project using: N/A
+To run tests, run the following command: `npm test`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -101,13 +98,13 @@ You can deploy this project using: N/A
 
 ## 👥 Authors <a name="authors"></a>
 
-👤 **Author1**
+👤 **Peter Akhigbe**
 
 - GitHub: [@peter-akhigbe](https://github.com/peter-akhigbe)
 - Twitter: [@peter*akhigbe*](https://twitter.com/peter_akhigbe_)
 - LinkedIn: [peter-akhigbe](https://linkedin.com/in/peter-akhigbe)
 
-👤 **Author2**
+👤 **Samuel Obuobi Lartey**
 
 - GitHub: [@kwesiObuobi](https://github.com/kwesiObuobi)
 - Twitter: [@kwesi-obuobi](https://twitter.com/kwesi-obuobi)
@@ -119,9 +116,9 @@ You can deploy this project using: N/A
 
 ## 🔭 Future Features <a name="future-features"></a>
 
-- [ ] **Backend**
-- [ ] **Database**
-- [ ] **API**
+- [ ] **Users can 'like' a movie only once**
+- [ ] **Users can 'unlike' a movie they had 'liked' previously**
+- [ ] **Users can bookmark a movie to watch later**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -147,11 +144,7 @@ Give a ⭐️ if you like this project!
 
 ## 🙏 Acknowledgments <a name="acknowledgements"></a>
 
-I would like to thank the Microverse curriculum.
-
-<!-- FAQ (optional) -->
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+We would like to thank the Microverse curriculum.
 
 <!-- LICENSE -->
 
